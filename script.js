@@ -162,7 +162,3 @@ document.addEventListener('mouseleave', function(e) {
         }, 5000);
     }
 });
-
-window.onbeforeunload = function() {
-    return 'Мы сохраняем данные, но при очистке кэша они могут пропасть. Мы сделали выгрузку в телеграм или в txt-файл. Воспользуйтесь ими, чтобы не потерять данные';
-};
