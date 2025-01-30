@@ -148,3 +148,9 @@ const app = new Vue({
     }
   }
 });
+
+window.addEventListener('beforeunload', function (e) {
+    e.preventDefault();
+    e.returnValue = 'Мы сохраняем данные, но при очистке кэша они могут пропасть. Мы сделали выгрузку в телеграм или в txt-файл. Воспользуйтесь ими, чтобы не потерять данные';
+    return e.returnValue;
+});

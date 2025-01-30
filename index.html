@@ -66,17 +66,17 @@
               <div class="item__content">
                 <div class="item__details">
                   <div class="item__detail">
-                    <label :for="'item-cost-' + index">Стоимость товара</label>
+                    <label :for="'item-cost-' + index">Цена</label>
                     <input v-model="item.cost" @input="countCostPerClient(item)" type="tel" :id="'item-cost-' + index"
                       placeholder="5500">
                   </div>
                   <div class="item__detail">
-                    <label :for="'item-volume-' + index">Объем</label>
+                    <label :for="'item-volume-' + index">Объем материала</label>
                     <input v-model="item.value" @input="countCostPerClient(item)" type="tel" :id="'item-volume-' + index"
                       placeholder="100">
                   </div>
                   <div class="item__detail">
-                    <label :for="'client-spend-' + index">На клиента</label>
+                    <label :for="'client-spend-' + index">Расход на клиента</label>
                     <input v-model="item.valuePerClient" @input="countCostPerClient(item)" type="tel"
                       :id="'client-spend-' + index" placeholder="15">
                   </div>
