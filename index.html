@@ -1,91 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Расчет себестоимости</title>
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@300;400;500&display=swap" rel="stylesheet">
 
 </head>
+
 <body>
 
 
-<main id='app'>
+  <main id='app'>
+    <div class="layout">
+      <div class="sidebar">
+        <div class="sidebar__top">
+          <aside class="result">
+            <div class="result__item">
+              <span>{{ totalCount.count }}</span> {{ totalCount.word }}
+            </div>
+            <div class="result__item">
+              <span>{{ finalCostPerClient ? finalCostPerClient : 0 }}₽</span> на клиента
+            </div>
+          </aside>
+          <button @click="addItem" class="add-more-button">Добавить ещё</button>
+        </div>
 
-<!--===========================
-            Items
-===============================-->
 
-
-<ul class="list">
-    <li v-for="(item, index) in products" :key="index" class="list__item item" :ref="'product-' + index">
-      <div class="item__header">
-        <input v-model="item.name" type="text" placeholder="Название материала" class="item__name">
-        <button @click="removeItem(index)" class="item__delete" aria-label="Удалить">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" fill="currentColor"></path>
-          </svg>
-        </button>
-      </div>
-      <div class="item__content">
-        <div class="item__details">
-          <div class="item__detail">
-            <label :for="'item-cost-' + index">Стоимость товара</label>
-            <input v-model="item.cost" @input="countCostPerClient(item)" type="tel" :id="'item-cost-' + index" placeholder="5500">
+        <div class="sidebar__bottom">
+            <p class="warning">Данные автоматически сохраняются в браузере. Но <b> это не надежно</b>. Рекомендуем дополнительно сохранять их в надежном месте.
+            </p>
+          <div class="share_buttons">
+            <button @click="shareToTelegram" class="share__button">
+              <i class="fa fa-telegram"></i> Отправить в Telegram
+            </button>
+            <button @click="downloadTextFile" class="share__button share__button--download">
+              <i class="fa fa-download"></i> Скачать текстовый файл
+            </button>
           </div>
-          <div class="item__detail">
-            <label :for="'item-volume-' + index">Объем</label>
-            <input v-model="item.value" @input="countCostPerClient(item)" type="tel" :id="'item-volume-' + index" placeholder="100">
-          </div>
-          <div class="item__detail">
-            <label :for="'client-spend-' + index">Сколько тратим на клиента</label>
-            <input v-model="item.valuePerClient" @input="countCostPerClient(item)" type="tel" :id="'client-spend-' + index" placeholder="15">
+
+          <div class="contacts">
+            <a href="https://dev-postnov.ru/projects/cost-calc/">История разработки проекта</a>
+            <a target="blank" href="https://t.me/danya_postnov">Автор проекта в TG</a>
           </div>
         </div>
-        <div class="item__detail item__detail--result">
-          <label>₽ на клиента</label>
-          <span class="item__result-value">{{ item.costPerClient }}</span>
+      </div>
+
+      <div class="main-content">
+        <div class="list-container">
+          <ul class="list">
+            <li v-for="(item, index) in products" :key="index" class="list__item item" :ref="'product-' + index">
+              <div class="item__header">
+                <input v-model="item.name" type="text" placeholder="Название материала" class="item__name">
+                <button @click="removeItem(index)" class="item__delete" aria-label="Удалить">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                      fill="currentColor"></path>
+                  </svg>
+                </button>
+              </div>
+              <div class="item__content">
+                <div class="item__details">
+                  <div class="item__detail">
+                    <label :for="'item-cost-' + index">Стоимость товара</label>
+                    <input v-model="item.cost" @input="countCostPerClient(item)" type="tel" :id="'item-cost-' + index"
+                      placeholder="5500">
+                  </div>
+                  <div class="item__detail">
+                    <label :for="'item-volume-' + index">Объем</label>
+                    <input v-model="item.value" @input="countCostPerClient(item)" type="tel" :id="'item-volume-' + index"
+                      placeholder="100">
+                  </div>
+                  <div class="item__detail">
+                    <label :for="'client-spend-' + index">На клиента</label>
+                    <input v-model="item.valuePerClient" @input="countCostPerClient(item)" type="tel"
+                      :id="'client-spend-' + index" placeholder="15">
+                  </div>
+                </div>
+                <div class="item__detail item__detail--result">
+                  <label>₽ на клиента</label>
+                  <span class="item__result-value">{{ item.costPerClient }}</span>
+                </div>
+              </div>
+            </li>
+            <button @click="addItem" class="add-more-button">Добавить ещё</button>
+          </ul>
         </div>
       </div>
-    </li>
-    <button @click="addItem" class="add-more-button">Добавить ещё</button>
-  </ul>
-
- <div style="display: none;">Будьте аккуратны. Мы не сохраняем данные у себя. Данные сохраняются только в вашем браузере, пока вы не очистите кэш. Для безопасности сохраняйте их в надежном месте.</div>
-
-  <footer class="footer">
-    <p class="footer__item"><a href="https://dev-postnov.ru/projects/cost-calc/">Подробнее о проекте</a></p>
-    <p class="footer__item">Автор <span class="footer__item"><a target="blank" href="https://t.me/danya_postnov">Даниил Постнов</a></span></p>
-  </footer>
-
-
-
-<!--===========================
-         Aside Panel
-===============================-->
-
-
-  <aside class="result">
-    <div class="result__item result__item--add">
-      <button v-on:click="addItem" class="add-item">+</button>
     </div>
-    <div class="result__item">
-      <span>{{ totalCount.count }}</span> {{ totalCount.word }}
-    </div>
-    <div class="result__item ">
-      <span>{{ finalCostPerClient ? finalCostPerClient : 0 }}₽</span> на клиента
-    </div>
-  </aside>
-
-
-</main>
+  </main>
 
 
 
-<script src="vue.js"></script>
-<script src="script.js"></script>
+  <script src="vue.js"></script>
+  <script src="script.js"></script>
 
 </body>
+
 </html>
