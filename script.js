@@ -149,8 +149,20 @@ const app = new Vue({
   }
 });
 
-window.addEventListener('beforeunload', function (e) {
-    e.preventDefault();
-    e.returnValue = 'Мы сохраняем данные, но при очистке кэша они могут пропасть. Мы сделали выгрузку в телеграм или в txt-файл. Воспользуйтесь ими, чтобы не потерять данные';
-    return e.returnValue;
+let hasShownAlert = false;
+
+document.addEventListener('mouseleave', function(e) {
+    if (e.clientY <= 0 && !hasShownAlert) { // Курсор вышел через верхнюю границу страницы
+        alert('Мы сохраняем данные, но при очистке кэша они могут пропасть. Мы сделали выгрузку в телеграм или в txt-файл. Воспользуйтесь ими, чтобы не потерять данные');
+        hasShownAlert = true; // Чтобы показать предупреждение только один раз
+        
+        // Сбросим флаг через некоторое время, чтобы можно было показать предупреждение снова
+        setTimeout(() => {
+            hasShownAlert = false;
+        }, 5000);
+    }
 });
+
+window.onbeforeunload = function() {
+    return 'Мы сохраняем данные, но при очистке кэша они могут пропасть. Мы сделали выгрузку в телеграм или в txt-файл. Воспользуйтесь ими, чтобы не потерять данные';
+};
