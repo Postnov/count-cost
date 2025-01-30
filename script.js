@@ -110,6 +110,41 @@ const app = new Vue({
         }
       }
       return null;
+    },
+    shareToTelegram() {
+      const text = this.generateShareText();
+      const encodedText = encodeURIComponent(text);
+      window.open(`https://t.me/share/url?url=${encodedText}`, '_blank');
+    },
+    downloadTextFile() {
+      const text = this.generateShareText();
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'расчет-себестоимости.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    },
+    generateShareText() {
+      let text = '📊 Расчет себестоимости\n\n';
+      
+      this.products.forEach((item, index) => {
+        if (item.name || item.costPerClient) {
+          text += `${index + 1}. ${item.name || 'Материал'}\n`;
+          text += `   💰 Стоимость: ${item.cost || 0}₽\n`;
+          text += `   📦 Объем: ${item.value || 0}\n`;
+          text += `   👤 Расход на клиента: ${item.valuePerClient || 0}\n`;
+          text += `   💵 Стоимость на клиента: ${item.costPerClient || 0}₽\n\n`;
+        }
+      });
+
+      text += `\n🔥 Итого на клиента: ${this.finalCostPerClient}₽\n`;
+      text += '\nСоздано с помощью https://dev-postnov.ru/projects/cost-calc/';
+      
+      return text;
     }
   }
 });
