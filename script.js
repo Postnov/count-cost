@@ -30,7 +30,7 @@ const app = new Vue({
   computed: {
     totalCount() {
       const count = this.products.length;
-      const forms = ['материал', 'материала', 'материалов'];
+      const forms = ['товар', 'товара', 'товаров'];
       const cases = [2, 0, 1, 1, 1, 2];
       const index = (count % 100 > 4 && count % 100 < 20) ? 2 : cases[(count % 10 < 5) ? count % 10 : 5];
       console.log('totalCount result:', { count, word: forms[index] });
@@ -133,7 +133,7 @@ const app = new Vue({
       
       this.products.forEach((item, index) => {
         if (item.name || item.costPerClient) {
-          text += `${index + 1}. ${item.name || 'Материал'}\n`;
+          text += `${index + 1}. ${item.name || 'Товар'}\n`;
           text += `   💰 Стоимость: ${item.cost || 0}₽\n`;
           text += `   📦 Объем: ${item.value || 0}\n`;
           text += `   👤 Расход на клиента: ${item.valuePerClient || 0}\n`;

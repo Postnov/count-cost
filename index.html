@@ -55,7 +55,7 @@
           <ul class="list">
             <li v-for="(item, index) in products" :key="index" class="list__item item" :ref="'product-' + index">
               <div class="item__header">
-                <input v-model="item.name" type="text" placeholder="Название материала" class="item__name">
+                <input v-model="item.name" type="text" placeholder="Название товара" class="item__name">
                 <button @click="removeItem(index)" class="item__delete" aria-label="Удалить">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
@@ -66,12 +66,12 @@
               <div class="item__content">
                 <div class="item__details">
                   <div class="item__detail">
-                    <label :for="'item-cost-' + index">Цена</label>
+                    <label :for="'item-cost-' + index">Цена товара</label>
                     <input v-model="item.cost" @input="countCostPerClient(item)" type="tel" :id="'item-cost-' + index"
                       placeholder="5500">
                   </div>
                   <div class="item__detail">
-                    <label :for="'item-volume-' + index">Объем материала</label>
+                    <label :for="'item-volume-' + index">Объем товара</label>
                     <input v-model="item.value" @input="countCostPerClient(item)" type="tel" :id="'item-volume-' + index"
                       placeholder="100">
                   </div>
