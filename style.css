@@ -298,6 +298,69 @@ input {
   background: transparent;
 }
 
+/* Animated idea button */
+.idea-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 24px;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  background: linear-gradient(135deg, #f87000, #ff9a44, #f87000);
+  background-size: 200% 200%;
+  color: var(--white);
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+  animation: idea-gradient 3s ease infinite;
+}
+
+.idea-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(248, 112, 0, 0.4);
+}
+
+.idea-button:active {
+  transform: translateY(0);
+}
+
+.idea-button__icon {
+  font-size: 1.3rem;
+  animation: idea-pulse 2s ease-in-out infinite;
+}
+
+.idea-button__sparkle {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  animation: idea-shine 3s ease-in-out infinite;
+}
+
+@keyframes idea-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes idea-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+@keyframes idea-shine {
+  0% { left: -100%; }
+  60% { left: 100%; }
+  100% { left: 100%; }
+}
+
 .contacts {
   display: flex;
   flex-direction: column;
@@ -435,6 +498,11 @@ input {
 
   .share__button {
     padding: 12px 16px;
+    font-size: 0.9rem;
+  }
+
+  .idea-button {
+    padding: 14px 18px;
     font-size: 0.9rem;
   }
 
